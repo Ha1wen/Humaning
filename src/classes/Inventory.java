@@ -1,13 +1,15 @@
+package classes;
+
 import java.util.ArrayList;
 
 public class Inventory {
     public static int DEFAULT_SIZE = 5;
 
-    private ArrayList<Human> humans;
+    private final ArrayList<Human> humans;
     private int size;
 
     public Inventory() {
-        humans = new ArrayList<Human>();
+        humans = new ArrayList<>();
         size = DEFAULT_SIZE;
     }
 
@@ -26,7 +28,7 @@ public class Inventory {
 
     public boolean findHuman(String name) {
         for (Human human: humans) {
-            if (human.getName() == name) {
+            if (human.getName().equals(name)) {
                 return true;
             }
         }
@@ -61,6 +63,7 @@ public class Inventory {
         size += increment;
     }
 
+    @Override
     public String toString() {
         String string = "";
         int c = 0;

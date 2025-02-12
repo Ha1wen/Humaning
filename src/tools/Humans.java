@@ -1,14 +1,18 @@
+package tools;
+
+import classes.Human;
+import classes.Rarity;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Map;
-
 import java.util.HashMap;
+import java.util.Map;
 
 public class Humans {
     static final private Map<String, ArrayList<Human>> humansMap = computeJson("res/Humans.json");
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     static private Map<String, ArrayList<Human>> computeJson(String path) {
         Map<String, ArrayList<Human>> map = new HashMap<>();
 
@@ -24,7 +28,7 @@ public class Humans {
 
         for (String rarityName: humansMapObject.keySet()) {
             Map<String, Map<String, Object>> humansObject = humansMapObject.get(rarityName);
-            ArrayList<Human> humansArray = new ArrayList<Human>();
+            ArrayList<Human> humansArray = new ArrayList();
 
             for (String name: humansObject.keySet()) {
                 Map<String, Object> humanObject = humansObject.get(name);
@@ -51,7 +55,7 @@ public class Humans {
     }
 
     static public Human getRandomHuman(double chance) {
-        Rarity rarity = Rarities.getArray().getFirst();
+        Rarity rarity = Rarities.getArray().get(0);
         for (Rarity checkRarity : Rarities.getArray()) {
             if ((double)1 /checkRarity.getChance() > chance) {
                 rarity = checkRarity;

@@ -1,5 +1,7 @@
+package classes;
+
 public class Player {
-    private Inventory inventory;
+    private final Inventory inventory;
     private int money;
     private String name;
 

@@ -1,7 +1,9 @@
+package classes;
+
 public class Rarity {
-    private String name;
-    private int chance;
-    private int price;
+    private final String name;
+    private final int chance;
+    private final int price;
 
     public Rarity (String name, int chance, int price) {
         this.name = name;

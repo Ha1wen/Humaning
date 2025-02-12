@@ -1,13 +1,15 @@
+package tools;
+
 import java.util.*;
 
 class JSONParser {
-    private String json;
+    private final String json;
     private int index;
 
     public JSONParser(String json) {
         json = json.trim();
         //json = json.replaceAll(" ", "");
-        json = json.replaceAll("\n", "");
+        json = json.replaceAll("(\\r|\\n)", "");
         json = removeSpaces(json);
 
         //System.out.println(json);
@@ -88,7 +90,7 @@ class JSONParser {
         }
         String numStr = json.substring(start, index);
         //return numStr.contains(".") ? Double.parseDouble(numStr) : Integer.parseInt(numStr);
-        return Integer.parseInt(numStr);
+        return Integer.valueOf(numStr);
     }
 
     private void consume(char expected) {

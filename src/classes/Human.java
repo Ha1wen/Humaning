@@ -1,7 +1,9 @@
+package classes;
+
 public class Human {
-    private String name;
-    private String desc;
-    private Rarity rarity;
+    private final String name;
+    private final String desc;
+    private final Rarity rarity;
 
     public Human(String name, String desc, Rarity rarity) {
         this.name = name;
