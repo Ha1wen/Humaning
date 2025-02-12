@@ -1,0 +1,35 @@
+{
+
+    "Common" : {
+        "Guy"   : {"desc" : "Just a guy"},
+        "Fella" : {"desc" : "Just a fella"},
+        "Bob"   : {"desc" : "Just a bob"}
+    },
+
+    "Uncommon" : {
+        "Gamer" : {"desc" : "Epic game wow"},
+        "Man" : {"desc" : "Very manly man"}
+    },
+
+    "Rare" : {
+        "Chopped Chin" : {"desc" : "Bruh"},
+        "Crewmate" : {"desc" : "amon gus"},
+        "Joe Swanson" : {"desc": "I'm a paraplegic, peter"}
+    },
+
+    "Epic" : {
+        "Mr Washee Washee" : {"desc": "You clean more"},
+        "Mr Beast" : {"desc": "MR BEAST"},
+        "Markiplier" : {"desc": "Was that the byte of 87?"},
+        "Elon Musk" : {"desc": "Invest in DOGE"},
+        "Packets Guy" : {"desc": "Some kids can't learn like that"}
+    },
+
+    "Legendary" : {
+        "Peter Griffin" : {"desc": "Meheheh"},
+        "Joe Biden" : {"desc": "Chocolate chocolate chip"},
+        "Barrack Obama" : {"desc" : "My fellow americans"},
+        "Eye of Rah" : {"desc": "Ayyo chill tf out"},
+        "Ethan" : {"desc": "Pinicle of human evolution"}
+    }
+}

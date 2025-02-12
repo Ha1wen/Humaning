@@ -1,0 +1,7 @@
+{
+    "Common" : {"chance" : 1, "price" : 10},
+    "Uncommon" : {"chance": 4, "price" : 25},
+    "Rare" : {"chance": 8, "price": 50},
+    "Epic" : {"chance": 16, "price": 100},
+    "Legendary" : {"chance" : 32, "price" : 250}
+}
