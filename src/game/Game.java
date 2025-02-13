@@ -1,6 +1,7 @@
 package game;
 
 import classes.*;
+
 import java.util.Arrays;
 import java.util.List;
 import tools.*;
@@ -21,6 +22,7 @@ public class Game {
     }
 
     public void play() {
+        //Screen.print("{Blue,Bold,White}Balls");
         while(true) {
             menu();
         }
@@ -28,7 +30,7 @@ public class Game {
 
     public void menu() {
         Screen.clear();
-        Screen.print("What would you like to do?");
+        Screen.print("{Yellow}What would you like to do?");
 
         int c = 1;
         for (String name : menuOptions) {

@@ -8,8 +8,8 @@ public class Screen {
             if (System.getProperty("os.name").contains("Windows")) {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             } else {
-                System.out.print("\033[H\033[2J");
-                System.out.flush();
+                System.out.println("\033[H\033[2J");
+                new ProcessBuilder("/bin/sh","-c","stty sane -echo").inheritIO().start().waitFor();
             }
         } catch (IOException | InterruptedException e) {
             System.out.println(e);
@@ -17,6 +17,11 @@ public class Screen {
     }
 
     public static void print(String text) {
-        System.out.println(text);
+        System.out.printf(color(text)+"\n");
+        //System.out.println();
+    }
+
+    private static String color(String string) {
+        return Colors.getString(string)+Colors.reset();
     }
 }
