@@ -36,10 +36,18 @@ public class Human {
     }
 
     public String getColor() {
+        return "{"+rarity.getColor()+"}";
+    }
+
+    public String getColorName() {
         return rarity.getColor();
     }
 
+    public String getProperties() {
+        return "{ITALIC}Rariy  {X}: "+getColor()+getRarity()+"{X}\nName   : "+getColor()+name+"{X}\nChance : 1 in "+getChance()+"\nPrice  : {darkgreen}$"+getPrice()+"{X}";
+    }
+
     public String toString() {
-        return "{BOLD;"+getColor()+"}"+getRarity()+" : {X;"+getColor()+"}"+name+"{X}";
+        return "{BOLD}"+getColor()+getRarity()+" : {X}"+getColor()+name+"{X}";
     }
 }

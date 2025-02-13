@@ -34,7 +34,13 @@ public class Game {
 
         int c = 1;
         for (String name : menuOptions) {
-            Screen.print("{ITALIC}"+c+++" : "+name+"\n");
+            String effect = "{ITALIC}";
+            String string = +c+++" : "+name;
+            if (name.equals("Sell") && inventory.getAmount() <= 0) {
+                effect = "{ITALIC;SOFT}";
+                string += " (empty)";
+            }
+            Screen.print(effect + string);
         }
 
         int option = Input.num(3);
@@ -55,49 +61,49 @@ public class Game {
         // String rarity = human.getRarity();
         // String name = human.getName();
         // String color = human.getColor();
-        int chance = human.getChance();
+        //int chance = human.getChance();
+        String properties = human.getProperties();
 
+        Screen.print("{BOLD;INVERT} YOU CAUGHT A HUMAN! {X}\n\n"+properties+"\n");
 
-        Screen.print("You caught a "+human+"! A 1 in "+chance+" chance");
-
-        boolean full = !inventory.addHuman(human);
-        if (full) {
-            Screen.print("Unfortunately, your inventory is full!");
+        int left = inventory.addHuman(human);  
+        if (left < 0) {
+            Screen.print("{ITALIC}Unfortunately, your inventory is {BOLD}full!");
+        } else {
+            Screen.print("{ITALIC}You have "+left+" inventory slots left!");
         }
+
+
         Input.cnt();
     }
 
     public void inventory() {
-        Screen.print("{BOLD;INVERT}INVENTORY{X}\n"+inventory);
+        Screen.print("{BOLD;INVERT} INVENTORY {X}\n\n"+inventory);
         Input.cnt();
     }
 
     public void sell() {
-        String inventoryString = inventory.toString();
-        Screen.print("Which human would you like to sell? (type 0 to exit)\n"+inventoryString);
+        if (inventory.getAmount() <= 0) return;
+        String inventoryString = inventory.getString(true);
+        Screen.print("{BOLD;INVERT} Which human would you like to sell? (press enter to exit )\n\n"+inventoryString);
 
         int options = inventory.getAmount();
-        int selection = Input.num(options)-1;
+        int selection = Input.num(0, options, true);
 
         if (selection == -1) {
             return;
         }
 
         Screen.clear();
+        int money = 0;
 
-        if (selection < 0 || selection >= inventory.getAmount()) {
-            Screen.print("Invalid Selection");
-            Input.cnt();
-            return;
+        if (selection == 0) {
+            money+= player.sellHumans();
+        } else {
+            money+= player.sellHuman(selection);
         }
 
-        Human human = inventory.getHuman(selection);
-        int price = human.getPrice();
-
-        player.addMoney(price);
-        inventory.removeHuman(selection);
-
-        Screen.print("Sold! You earned $"+price);
+        Screen.print("{BOLD} Sold! You earned {green}$"+money+"!");
         Input.cnt();
     }
 }

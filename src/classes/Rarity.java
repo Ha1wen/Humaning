@@ -28,8 +28,4 @@ public class Rarity {
     public int getChance() {
         return chance;
     }
-
-    public String getArticle() {
-        return "a";
-    }
 }

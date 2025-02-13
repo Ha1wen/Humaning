@@ -27,6 +27,24 @@ public class Player {
         money -= num;
         return true;
     }
+    
+    public int sellHuman(int index) {
+        Human human = inventory.getHuman(index);
+        int price = human.getPrice();
+        money +=price;
+        inventory.removeHuman(index);
+
+        return price;
+    }
+
+    public int sellHumans() {
+        int total = inventory.getWorth();
+        for (int i = 0; i<inventory.getAmount(); i=0) {
+            sellHuman(0);
+        }
+
+        return total;
+    }
 
     public Inventory getInventory() {
         return inventory;

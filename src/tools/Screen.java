@@ -21,7 +21,15 @@ public class Screen {
         //System.out.println();
     }
 
-    private static String color(String string) {
+    public static String color(String string) {
         return Colors.getString(string)+Colors.reset();
+    }
+
+    public static String align(String string, int length) {
+        return string + space(length - string.length());
+    }
+
+    public static String space(int length) {
+        return " ".repeat(length);
     }
 }

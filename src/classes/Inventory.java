@@ -2,6 +2,8 @@ package classes;
 
 import java.util.ArrayList;
 
+import tools.Screen;
+
 public class Inventory {
     public static int DEFAULT_SIZE = 5;
 
@@ -13,13 +15,13 @@ public class Inventory {
         size = DEFAULT_SIZE;
     }
 
-    public boolean addHuman(Human human) {
+    public int addHuman(Human human) {
         if (humans.size() == size) {
-            return false;
+            return -1;
         }
 
         humans.add(human);
-        return true;
+        return size-humans.size();
     }
 
     public void removeHuman(int index) {
@@ -68,16 +70,58 @@ public class Inventory {
         size = DEFAULT_SIZE;
     }
 
-    public String toString() {
-        String string = "";
-        int c = 1;
+    public int getWorth() {
+        int worth = 0;
+
+        for (Human human : humans) worth+=human.getPrice();
+
+        return worth;
+    }
+
+    public String getLongestName() {
+        String longest = "";
         for (Human human: humans) {
-            string+=c+" "+human;
+            if (human.getName().length() > longest.length()) longest = human.getName();
+        }
+
+        return longest;
+    }
+
+    public String getLongestRarity() {
+        String longest = "";
+        for (Human human: humans) {
+            if (human.getRarity().length() > longest.length()) longest = human.getRarity();
+        }
+
+        return longest;
+    }
+
+    public String getString(boolean prices) {
+        String string = "";
+        int nameSpace = getLongestName().length();
+        int raritySpace = getLongestRarity().length();
+        int c = 1;
+
+        if (prices) {
+            string+="{ITALIC}0{X} All : {green}$"+getWorth()+"{X}\n\n";
+        }
+        for (Human human: humans) {
+            String color = human.getColorName();
+            String rarity = human.getRarity();
+            String name = human.getName();
+            String price = "$"+human.getPrice();
+
+            string+="{ITALIC}"+c+" {BOLD;"+color+"}"+Screen.align(rarity, raritySpace)+" {X}: "+Screen.align(name, nameSpace);
+            if (prices) string+="{X} : {green}"+price;
 
             if (c++ < humans.size()) {
                 string += "\n";
             }
         }
         return string;
+    }
+
+    public String toString() {
+        return getString(false);
     }
 }

@@ -3,23 +3,29 @@ package tools;
 import java.io.IOException;
 import java.util.Scanner;
 
+import javax.sound.midi.SysexMessage;
+
 public class Input {
     private static final Scanner scanner = new Scanner(System.in);
+    
+    private static final int ENTER = 13;
 
     public static void cnt() {
         scanner.nextLine();
     }
 
-    public static int num(int max) {
-        int num = 0;
+    public static int num(int min, int max, boolean enter) {
+        int num = -1;
         try {
             new ProcessBuilder("sh", "-c", "stty raw -echo").inheritIO().start().waitFor();
 
-            while (num < 1 || num > max) {
+            while (num < min || num > max) {
                 int ascii = System.in.read();
                 char ch = (char)ascii;
                 
                 num = Character.getNumericValue(ch);
+                
+                if (enter && ascii == ENTER) return -1;
             }
 
             new ProcessBuilder("sh", "-c", "stty sane -echo").inheritIO().start().waitFor();
@@ -30,5 +36,9 @@ public class Input {
         }
 
         return num;
+    }
+
+    public static int num(int max) {
+        return num(1, max, false);
     }
 }

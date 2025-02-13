@@ -34,7 +34,7 @@ public class Colors {
         ""         //10
     );
 
-    public static final String unicode= "\033";
+    public static String unicode= "\033";
 
     public static String getColor(ArrayList<String> attributes) {
         //System.out.println(attributes);
@@ -48,10 +48,10 @@ public class Colors {
         for (String attribute: attributes) {
             if (attribute == null) continue;
 
-            int colorIndex = colorNames.indexOf(attribute.toLowerCase());
+            int colorIndex = colorNames.indexOf(attribute.toLowerCase().replace("dark", ""));
             if (colorIndex >=0) {
                 int colorNum = 90 + colorIndex;
-                if (attribute.contains("dark")) colorNum -= 60;
+                if (attribute.toLowerCase().contains("dark")) colorNum -= 60;
                 if (colors++>0) colorNum+=10;
                 color += ";"+colorNum;
             }
