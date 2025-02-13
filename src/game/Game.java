@@ -30,11 +30,11 @@ public class Game {
 
     public void menu() {
         Screen.clear();
-        Screen.print("{Yellow}What would you like to do?");
+        Screen.print("{INVERT;BOLD} What would you like to do? \n");
 
         int c = 1;
         for (String name : menuOptions) {
-            Screen.print(c+++" : "+name);
+            Screen.print("{ITALIC}"+c+++" : "+name+"\n");
         }
 
         int option = Input.num(3);
@@ -52,11 +52,13 @@ public class Game {
     public void humaning() {
         Human human = Humans.getRandomHuman();
 
-        String rarity = human.getRarity();
-        String name = human.getName();
+        // String rarity = human.getRarity();
+        // String name = human.getName();
+        // String color = human.getColor();
         int chance = human.getChance();
 
-        Screen.print("You caught a "+rarity+" : "+name+"! A 1 in "+chance+" chance");
+
+        Screen.print("You caught a "+human+"! A 1 in "+chance+" chance");
 
         boolean full = !inventory.addHuman(human);
         if (full) {
@@ -66,8 +68,7 @@ public class Game {
     }
 
     public void inventory() {
-        String inventoryString = inventory.toString();
-        Screen.print("INVENTORY\n"+inventoryString);
+        Screen.print("{BOLD;INVERT}INVENTORY{X}\n"+inventory);
         Input.cnt();
     }
 

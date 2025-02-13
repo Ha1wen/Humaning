@@ -63,27 +63,21 @@ public class Inventory {
         size += increment;
     }
 
-    @Override
+    public void clear() {
+        humans.clear();
+        size = DEFAULT_SIZE;
+    }
+
     public String toString() {
         String string = "";
-        int c = 0;
+        int c = 1;
         for (Human human: humans) {
-            c++;
+            string+=c+" "+human;
 
-            String name = human.getName();
-            String rarity = human.getRarity();
-
-            string += c+" "+rarity+" : "+name;
-
-            if (c < humans.size()) {
+            if (c++ < humans.size()) {
                 string += "\n";
             }
         }
         return string;
-    }
-
-    public void wipe() {
-        humans.clear();
-        size = DEFAULT_SIZE;
     }
 }

@@ -28,10 +28,11 @@ public class Rarities {
         for (String name: raritiesMapObject.keySet()) {
             Map<String, Object> rarityObject = raritiesMapObject.get(name);
 
+            String color = (String)rarityObject.get("color");
             int chance = (int)(Number)rarityObject.get("chance");
             int price = (int)(Number)rarityObject.get("price");
 
-            Rarity rarity = new Rarity(name, chance, price);
+            Rarity rarity = new Rarity(name, color, chance, price);
 
             map.put(name, rarity);
         }

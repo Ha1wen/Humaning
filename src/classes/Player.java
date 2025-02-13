@@ -40,8 +40,8 @@ public class Player {
         return name;
     }
 
-    public void wipe() {
-        inventory.wipe();
+    public void clear() {
+        inventory.clear();
         money = 0;
     }
 }

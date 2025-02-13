@@ -8,109 +8,113 @@ import java.util.Map;
 
 public class Colors {
     private static final List<String> colorNames= Arrays.asList(
-        "Black",
-        "Red",
-        "Green",
-        "Yellow",
-        "Blue",
-        "Purple",
-        "Cyan",
-        "White"
+        "black",    //0
+        "red",      //1
+        "green",    //2
+        "yellow",   //3
+        "blue",     //4
+        "purple",   //5
+        "cyan",     //6
+        "gray",     //7
+        null,       //8
+        "white"     //9
     );
 
     private static final List<String> modifierNames= Arrays.asList(
-        "",
-        "Bold",
-        "Soft",
-        "Italic",
-        "Line",
-        "Blink"
+        "X",        //0
+        "BOLD",     //1
+        "SOFT",     //2
+        "ITALIC",   //3
+        "LINE",     //4
+        "BLINK",    //5
+        null,       //6
+        "INVERT",   //7
+        null,       //8
+        "STROKE",   //9
+        ""         //10
     );
 
     public static final String unicode= "\033";
 
-    public static String getColor(String frontColor, String modifier, String backColor) {
-        int frontNum = 30;
-        int backNum = 100;
-        int modifierNum = modifierNames.indexOf(modifier);
+    public static String getColor(ArrayList<String> attributes) {
+        //System.out.println(attributes);
+        String color = unicode+"[";
+        int colors = 0;
 
-        if (frontColor.contains("Dark")) {
-            frontNum += 30;
-            frontColor = frontColor.substring(4);
-        }
-        if (backColor.contains("Dark")) {
-            backNum -= 60;
-            backColor = backColor.substring(4);
+        if (attributes.size() <= 0) {
+            return "";
         }
 
-        int frontIndex = colorNames.indexOf(frontColor);
-        int backIndex = colorNames.indexOf(backColor);
+        for (String attribute: attributes) {
+            if (attribute == null) continue;
 
-        frontNum+=frontIndex;
-        backNum+=backIndex;
-        
-        String color = unicode+"["+modifierNum+";"+frontNum+";"+backNum+"m";
+            int colorIndex = colorNames.indexOf(attribute.toLowerCase());
+            if (colorIndex >=0) {
+                int colorNum = 90 + colorIndex;
+                if (attribute.contains("dark")) colorNum -= 60;
+                if (colors++>0) colorNum+=10;
+                color += ";"+colorNum;
+            }
+
+            int modIndex = modifierNames.indexOf(attribute.toUpperCase());
+            if (modIndex >=0) {
+                color += ";"+modIndex;
+            }
+        }
+
+        if (!color.equals("")) color += "m";
 
         return color;
     }
 
+    public static String getColor(String frontColor, String modifier, String backColor) {
+        return getColor(new ArrayList<>(Arrays.asList(frontColor, modifier, backColor)));
+    }
+
     public static String getColor(String color, String modifier) {
-        return getColor(color, modifier, "");
+        return getColor(color, modifier, null);
     }
 
     public static String getColor(String color) {
-        return getColor(color, "");
+        return getColor(color, null);
     }
 
+    @SuppressWarnings("unchecked")
     public static String getString(String string) {
         ArrayList<Map<String, Object>> colors = new ArrayList<>();
 
+        ArrayList<String> attributes = new ArrayList<>();
         int pos = 0;
         int start = -1;
-        int attribute = -1;
-        String frontColor = "";
-        String backColor = "";
-        String modifier = "";
+        String attribute = "";
 
         for (char ch : string.toCharArray()) {
             switch (ch) {
                 case '{':
                     start = pos;
-                    attribute = 1;
                     break;
                 case '}':
+                    attributes.add(attribute);
+                    attribute = "";
+
                     Map<String,Object> colorMap = new HashMap<>();
                     colorMap.put("start", (Integer)start);
                     colorMap.put("end", (Integer)pos+1);
 
-                    colorMap.put("front-color", frontColor);
-                    colorMap.put("back-color", backColor);
-                    colorMap.put("modifier", modifier);
+                    colorMap.put("attributes", attributes);
 
                     colors.add(colorMap);
 
-                    attribute = -1;
-                    frontColor = "";
-                    backColor = "";
-                    modifier = "";
+                    attributes = new ArrayList<>();
+                    start = -1;
                     break;
-                case ',':
-                    if (attribute > 0) {
-                        attribute++;
-                    }
+                case ';':
+                    attributes.add(attribute);
+                    attribute = "";
                     break;
                 default:
-                    switch (attribute) {
-                        case 1:
-                            frontColor+=ch;
-                            break;
-                        case 2:
-                            modifier+=ch;
-                            break;
-                        case 3:
-                            backColor+=ch;
-                            break;
-                }
+                    if (start >=0) attribute+=ch;
+                    break;
             }
 
             pos++;
@@ -121,11 +125,9 @@ public class Colors {
             start = (int)colorMap.get("start")+offset;
             int end = (int)colorMap.get("end")+offset;
 
-            frontColor = (String)colorMap.get("front-color");
-            backColor = (String)colorMap.get("back-color");
-            modifier = (String)colorMap.get("modifier");
-            
-            String color = getColor(frontColor, modifier, backColor);
+            attributes = (ArrayList<String>)colorMap.get("attributes");
+            //1System.out.println(attributes);
+            String color = getColor(attributes);
 
             string = string.substring(0,start)+color+string.substring(end);
             offset += color.length() - (end-start);

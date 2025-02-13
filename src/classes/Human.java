@@ -35,4 +35,11 @@ public class Human {
         return rarity.getChance();
     }
 
+    public String getColor() {
+        return rarity.getColor();
+    }
+
+    public String toString() {
+        return "{BOLD;"+getColor()+"}"+getRarity()+" : {X;"+getColor()+"}"+name+"{X}";
+    }
 }
