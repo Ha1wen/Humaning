@@ -1,5 +1,10 @@
 package classes;
 
+import java.util.Arrays;
+import java.util.List;
+
+import tools.Screen;
+
 public class Human {
     private final String name;
     private final String desc;
@@ -36,18 +41,40 @@ public class Human {
     }
 
     public String getColor() {
-        return "{"+rarity.getColor()+"}";
-    }
-
-    public String getColorName() {
         return rarity.getColor();
     }
 
+    public String getColorName() {
+        return rarity.getColorName();
+    }
+
     public String getProperties() {
-        return "{ITALIC}Rariy  {X}: "+getColor()+getRarity()+"{X}\nName   : "+getColor()+name+"{X}\nChance : 1 in "+getChance()+"\nPrice  : {darkgreen}$"+getPrice()+"{X}";
+        String propertyColor = "{R;ITALIC;SOFT}";
+
+        List<String> properties = Arrays.asList(
+            "Rarity",       "{BOLD}"+getColor()+getRarity(),
+            "Name",         getColor()+name,
+            "Desc",  getDesc(),
+            "Chance",       "1 in "+getChance(),
+            "Price",        "{darkgreen}$"+getPrice()
+        );
+
+        String string = "";
+        int c=0;
+
+        for (String property: properties) {
+            if (c++%2==0) {
+                string+=propertyColor+Screen.align(property, 7)+"{R}: ";
+            } else {
+                string+=property+"{R}";
+                if (c+1<properties.size()) string+="\n";
+            }
+        }
+
+        return string;
     }
 
     public String toString() {
-        return "{BOLD}"+getColor()+getRarity()+" : {X}"+getColor()+name+"{X}";
+        return "{BOLD}"+getColor()+getRarity()+" : {R}"+getColor()+name+"{R}";
     }
 }

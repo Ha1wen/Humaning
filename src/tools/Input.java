@@ -3,18 +3,19 @@ package tools;
 import java.io.IOException;
 import java.util.Scanner;
 
-import javax.sound.midi.SysexMessage;
-
 public class Input {
     private static final Scanner scanner = new Scanner(System.in);
     
     private static final int ENTER = 13;
 
     public static void cnt() {
+        System.out.println();
         scanner.nextLine();
     }
 
     public static int num(int min, int max, boolean enter) {
+        System.out.println();
+        
         int num = -1;
         try {
             new ProcessBuilder("sh", "-c", "stty raw -echo").inheritIO().start().waitFor();

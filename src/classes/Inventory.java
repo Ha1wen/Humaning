@@ -2,6 +2,7 @@ package classes;
 
 import java.util.ArrayList;
 
+import tools.Rarities;
 import tools.Screen;
 
 public class Inventory {
@@ -9,10 +10,12 @@ public class Inventory {
 
     private final ArrayList<Human> humans;
     private int size;
+    private Rod rod;
 
     public Inventory() {
         humans = new ArrayList<>();
         size = DEFAULT_SIZE;
+        rod = new Rod(Rarities.getRarity("Common"));
     }
 
     public int addHuman(Human human) {
@@ -96,14 +99,20 @@ public class Inventory {
         return longest;
     }
 
-    public String getString(boolean prices) {
+    public String toString(boolean prices) {
         String string = "";
         int nameSpace = getLongestName().length();
         int raritySpace = getLongestRarity().length();
         int c = 1;
 
-        if (prices) {
-            string+="{ITALIC}0{X} All : {green}$"+getWorth()+"{X}\n\n";
+        if (!prices) {
+            string+="{ITALIC}Rod:{R,BOLD} "+rod.getColor()+rod.getRarity()+"{R}\n\n";
+
+            if (getAmount() > 0) string+= "{ITALIC}Humans:{R}\n";
+        }
+
+        if (prices && getAmount() >1) {
+            string+=" {ITALIC}0{R} All : {green}$"+getWorth()+"{R}\n\n";
         }
         for (Human human: humans) {
             String color = human.getColorName();
@@ -111,8 +120,8 @@ public class Inventory {
             String name = human.getName();
             String price = "$"+human.getPrice();
 
-            string+="{ITALIC}"+c+" {BOLD;"+color+"}"+Screen.align(rarity, raritySpace)+" {X}: "+Screen.align(name, nameSpace);
-            if (prices) string+="{X} : {green}"+price;
+            string+=" {R,ITALIC;SOFT}"+c+" {R;BOLD;"+color+"}"+Screen.align(rarity, raritySpace)+" {R}: "+Screen.align(name, nameSpace);
+            if (prices) string+="{R} : {green}"+price;
 
             if (c++ < humans.size()) {
                 string += "\n";
@@ -122,6 +131,10 @@ public class Inventory {
     }
 
     public String toString() {
-        return getString(false);
+        return toString(false);
+    }
+
+    public Rod getRod() {
+        return rod;
     }
 }

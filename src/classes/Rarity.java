@@ -17,8 +17,12 @@ public class Rarity {
         return name;
     }
 
-    public String getColor() {
+    public String getColorName() {
         return color;
+    }
+
+    public String getColor() {
+        return "{"+color+"}";
     }
     
     public int getPrice() {

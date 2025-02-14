@@ -21,7 +21,7 @@ public class Colors {
     );
 
     private static final List<String> modifierNames= Arrays.asList(
-        "X",        //0
+        "R",        //0
         "BOLD",     //1
         "SOFT",     //2
         "ITALIC",   //3
@@ -36,30 +36,36 @@ public class Colors {
 
     public static String unicode= "\033";
 
-    public static String getColor(ArrayList<String> attributes) {
+    public static String getColor(List<String> attributes) {
         //System.out.println(attributes);
         String color = unicode+"[";
-        int colors = 0;
 
         if (attributes.size() <= 0) {
             return "";
         }
 
+        int a = 1;
         for (String attribute: attributes) {
             if (attribute == null) continue;
 
-            int colorIndex = colorNames.indexOf(attribute.toLowerCase().replace("dark", ""));
+            int num = -1;
+
+            int colorIndex = colorNames.indexOf(attribute.toLowerCase().replace("dark", "").replace("back", ""));
             if (colorIndex >=0) {
                 int colorNum = 90 + colorIndex;
                 if (attribute.toLowerCase().contains("dark")) colorNum -= 60;
-                if (colors++>0) colorNum+=10;
-                color += ";"+colorNum;
+                if (attribute.toLowerCase().contains("back")) colorNum +=10;
+
+                num = colorNum;
             }
 
             int modIndex = modifierNames.indexOf(attribute.toUpperCase());
             if (modIndex >=0) {
-                color += ";"+modIndex;
+                num = modIndex;
             }
+
+            if (num >=0) color+=num;
+            if (a++<attributes.size()) color+=";";
         }
 
         if (!color.equals("")) color += "m";
@@ -68,7 +74,7 @@ public class Colors {
     }
 
     public static String getColor(String frontColor, String modifier, String backColor) {
-        return getColor(new ArrayList<>(Arrays.asList(frontColor, modifier, backColor)));
+        return getColor(Arrays.asList(frontColor, modifier, backColor));
     }
 
     public static String getColor(String color, String modifier) {
@@ -109,6 +115,7 @@ public class Colors {
                     start = -1;
                     break;
                 case ';':
+                case ',':
                     attributes.add(attribute);
                     attribute = "";
                     break;

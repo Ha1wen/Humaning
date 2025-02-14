@@ -30,7 +30,7 @@ public class Game {
 
     public void menu() {
         Screen.clear();
-        Screen.print("{INVERT;BOLD} What would you like to do? \n");
+        Screen.printBar(player, "What would you like to do?");
 
         int c = 1;
         for (String name : menuOptions) {
@@ -40,7 +40,7 @@ public class Game {
                 effect = "{ITALIC;SOFT}";
                 string += " (empty)";
             }
-            Screen.print(effect + string);
+            Screen.print(effect + string + "\n");
         }
 
         int option = Input.num(3);
@@ -64,7 +64,7 @@ public class Game {
         //int chance = human.getChance();
         String properties = human.getProperties();
 
-        Screen.print("{BOLD;INVERT} YOU CAUGHT A HUMAN! {X}\n\n"+properties+"\n");
+        Screen.print("{BOLD;INVERT} YOU CAUGHT A HUMAN! {R}\n\n"+properties+"\n");
 
         int left = inventory.addHuman(human);  
         if (left < 0) {
@@ -78,14 +78,16 @@ public class Game {
     }
 
     public void inventory() {
-        Screen.print("{BOLD;INVERT} INVENTORY {X}\n\n"+inventory);
+        Screen.printBar(player, "INVENTORY");
+        Screen.print(inventory.toString());
         Input.cnt();
     }
 
     public void sell() {
         if (inventory.getAmount() <= 0) return;
-        String inventoryString = inventory.getString(true);
-        Screen.print("{BOLD;INVERT} Which human would you like to sell? (press enter to exit )\n\n"+inventoryString);
+
+        Screen.printBar(player, "SELL HUMANS");
+        Screen.print(inventory.toString(true));
 
         int options = inventory.getAmount();
         int selection = Input.num(0, options, true);
@@ -100,7 +102,7 @@ public class Game {
         if (selection == 0) {
             money+= player.sellHumans();
         } else {
-            money+= player.sellHuman(selection);
+            money+= player.sellHuman(selection-1);
         }
 
         Screen.print("{BOLD} Sold! You earned {green}$"+money+"!");

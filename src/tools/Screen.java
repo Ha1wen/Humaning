@@ -2,7 +2,13 @@ package tools;
 
 import java.io.IOException;
 
+import classes.Player;
+
 public class Screen {
+    private static final String titleColor = "{INVERT;BOLD}";
+    private static final String playerColor = "{backdarkblack}";
+    private static final int barSize = 28;
+
     public static void clear() {
         try {
             if (System.getProperty("os.name").contains("Windows")) {
@@ -19,6 +25,25 @@ public class Screen {
     public static void print(String text) {
         System.out.printf(color(text)+"\n");
         //System.out.println();
+    }
+
+    public static void printBar(Player player, String title) {
+        int marginSize = (barSize-title.length())/2;
+        String space = space(marginSize);
+
+        title = space+title+space;
+        if (title.length()%2!=0) title+=" ";
+
+        String name = player.getName();
+        int length = title.length();
+        int money = player.getMoney();
+
+        String playerBar = playerColor+Screen.align(" "+name, length-(String.valueOf(money).length()+2)) + "{green}$"+money+" ";
+        String titleBar = titleColor+title+"{R}\n";
+
+        print(playerBar);
+        print(titleBar);
+
     }
 
     public static String color(String string) {

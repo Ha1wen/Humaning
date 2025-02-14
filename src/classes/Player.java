@@ -1,6 +1,9 @@
 package classes;
 
+import tools.Screen;
+
 public class Player {
+    private static final String barColor = "{backdarkblack}";
     private final Inventory inventory;
     private int money;
     private String name;
@@ -46,6 +49,10 @@ public class Player {
         return total;
     }
 
+    public String getBar(int length) {
+        return barColor+Screen.align(" "+name, length-(String.valueOf(money).length()+2)) + "{green}$"+money+" ";
+    }
+
     public Inventory getInventory() {
         return inventory;
     }
@@ -61,5 +68,9 @@ public class Player {
     public void clear() {
         inventory.clear();
         money = 0;
+    }
+
+    public int getLuck() {
+        return inventory.getRod().getMultiplier();
     }
 }
