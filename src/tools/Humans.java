@@ -68,9 +68,13 @@ public class Humans {
         return randomHuman;
     }
 
-    static public Human getRandomHuman() {
-        double chance = Math.random();
+    static public Human getRandomHuman(int luck) {
+        double chance = Math.random()/luck;
         return getRandomHuman(chance);
+    }
+
+    static public Human getRandomHuman() {
+        return getRandomHuman(0);
     }
 
     static public void printHumans () {

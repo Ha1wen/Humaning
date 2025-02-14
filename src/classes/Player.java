@@ -22,6 +22,10 @@ public class Player {
         money+=num;
     }
 
+    public void setRot(Rod rod) {
+        inventory.setRod(rod);
+    }
+
     public boolean spendMoney(int num) {
         if (num > money) {
             return false;
@@ -71,6 +75,6 @@ public class Player {
     }
 
     public int getLuck() {
-        return inventory.getRod().getMultiplier();
+        return inventory.getRod().getLuck();
     }
 }

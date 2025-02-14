@@ -64,7 +64,7 @@ public class Human {
 
         for (String property: properties) {
             if (c++%2==0) {
-                string+=propertyColor+Screen.align(property, 7)+"{R}: ";
+                string+=" "+propertyColor+Screen.align(property, 7)+"{R}: ";
             } else {
                 string+=property+"{R}";
                 if (c+1<properties.size()) string+="\n";

@@ -7,7 +7,7 @@ import classes.Player;
 public class Screen {
     private static final String titleColor = "{INVERT;BOLD}";
     private static final String playerColor = "{backdarkblack}";
-    private static final int barSize = 28;
+    private static final int barSize = 50;
 
     public static void clear() {
         try {
@@ -38,9 +38,10 @@ public class Screen {
         int length = title.length();
         int money = player.getMoney();
 
-        String playerBar = playerColor+Screen.align(" "+name, length-(String.valueOf(money).length()+2)) + "{green}$"+money+" ";
+        String playerBar = playerColor+Screen.align(" "+name, length-(String.valueOf(money).length()+2)) + "{green}$"+money+" {R}";
         String titleBar = titleColor+title+"{R}\n";
 
+        clear();
         print(playerBar);
         print(titleBar);
 
