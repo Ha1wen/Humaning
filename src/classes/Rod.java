@@ -52,6 +52,7 @@ public class Rod {
         return luck;
     }
 
+    @Override
     public String toString() {
         return getColor()+"{BOLD}"+getRarity()+"{R} : "+getColor()+getName();
     }

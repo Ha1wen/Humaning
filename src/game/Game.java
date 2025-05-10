@@ -1,7 +1,6 @@
 package game;
 
 import classes.*;
-
 import java.util.Arrays;
 import java.util.List;
 import tools.*;
@@ -137,7 +136,7 @@ public class Game {
 
         if (selection == 0) {
             //player.sellHumans();
-            inventory.removeHumans();;
+            inventory.removeHumans();
         } else {
             //player.sellHuman(selection-1);
             inventory.removeHuman(selection);

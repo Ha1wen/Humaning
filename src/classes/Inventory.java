@@ -1,7 +1,6 @@
 package classes;
 
 import java.util.ArrayList;
-
 import tools.Rods;
 import tools.Screen;
 
@@ -149,6 +148,7 @@ public class Inventory {
         return toString(prices, -1);
     }
 
+    @Override
     public String toString() {
         return toString(false, -1);
     }

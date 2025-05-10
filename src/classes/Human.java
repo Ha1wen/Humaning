@@ -2,7 +2,6 @@ package classes;
 
 import java.util.Arrays;
 import java.util.List;
-
 import tools.Screen;
 
 public class Human {
@@ -74,6 +73,7 @@ public class Human {
         return string;
     }
 
+    @Override
     public String toString() {
         return "{BOLD}"+getColor()+getRarity()+" : {R}"+getColor()+name+"{R}";
     }

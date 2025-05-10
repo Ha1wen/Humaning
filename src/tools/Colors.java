@@ -97,10 +97,8 @@ public class Colors {
 
         for (char ch : string.toCharArray()) {
             switch (ch) {
-                case '{':
-                    start = pos;
-                    break;
-                case '}':
+                case '{' -> start = pos;
+                case '}' -> {
                     attributes.add(attribute);
                     attribute = "";
 
@@ -114,15 +112,14 @@ public class Colors {
 
                     attributes = new ArrayList<>();
                     start = -1;
-                    break;
-                case ';':
-                case ',':
+                }
+                case ';', ',' -> {
                     attributes.add(attribute);
                     attribute = "";
-                    break;
-                default:
+                }
+                default -> {
                     if (start >=0) attribute+=ch;
-                    break;
+                }
             }
 
             pos++;

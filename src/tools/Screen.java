@@ -1,14 +1,13 @@
 package tools;
 
+import classes.Player;
 import java.io.IOException;
 
-import classes.Player;
-
 public class Screen {
-    private static final String clearString = "\033[H\033[2J";
-    private static final String titleColor = "{INVERT;BOLD}";
-    private static final String playerColor = "{backdarkblack}";
-    private static final int barSize = 50;
+    private static final String CLEAR_STRING = "\033[H\033[2J";
+    private static final String TITLE_COLOR = "{INVERT;BOLD}";
+    private static final String PLAYER_COLOR = "{backdarkblack}";
+    private static final int BAR_SIZE = 50;
 
     public static void reset() {
         try {
@@ -24,7 +23,7 @@ public class Screen {
 
     public static void clear() {
         reset();         
-        System.out.print(clearString);
+        System.out.print(CLEAR_STRING);
     }
 
     public static void print(Player player, String title, String content) {
@@ -43,7 +42,7 @@ public class Screen {
     }
 
     public static String getBar(Player player, String title) {
-        int marginSize = (barSize-title.length())/2;
+        int marginSize = (BAR_SIZE-title.length())/2;
         String space = space(marginSize);
 
         title = space+title+space;
@@ -53,8 +52,8 @@ public class Screen {
         int length = title.length();
         int money = player.getMoney();
 
-        String playerBar = playerColor+Screen.align(" "+name, length-(String.valueOf(money).length()+2)) + "{green}$"+money+" {R}";
-        String titleBar = titleColor+title+"{R}\n";
+        String playerBar = PLAYER_COLOR+Screen.align(" "+name, length-(String.valueOf(money).length()+2)) + "{green}$"+money+" {R}";
+        String titleBar = TITLE_COLOR+title+"{R}\n";
 
         String bar = getClear() + playerBar + "\n" + titleBar;
 
@@ -66,7 +65,7 @@ public class Screen {
     }
 
     public static String getClear() {
-        return clearString;
+        return CLEAR_STRING;
     }
 
     public static String align(String string, int length) {

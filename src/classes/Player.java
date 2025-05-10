@@ -3,7 +3,7 @@ package classes;
 import tools.Screen;
 
 public class Player {
-    private static final String barColor = "{backdarkblack}";
+    private static final String BAR_COLOR = "{backdarkblack}";
     private final Inventory inventory;
     private int money;
     private String name;
@@ -54,7 +54,7 @@ public class Player {
     }
 
     public String getBar(int length) {
-        return barColor+Screen.align(" "+name, length-(String.valueOf(money).length()+2)) + "{green}$"+money+" ";
+        return BAR_COLOR+Screen.align(" "+name, length-(String.valueOf(money).length()+2)) + "{green}$"+money+" ";
     }
 
     public Inventory getInventory() {
