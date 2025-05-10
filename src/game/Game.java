@@ -30,13 +30,13 @@ public class Game {
     }
 
     public void menu() {
-        Screen.clear();
-        Screen.printBar(player, "What would you like to do?");
+        String title = "What would you like to do?";
+        String content = "\n";
 
         int c = 1;
         for (String name : menuOptions) {
             String unavailable = ";SOFT";
-            String effect = "ITALIC";
+            String effect = "R;ITALIC";
             String string = name;
             String newLine = c < menuOptions.size() ? "\n" : "";
 
@@ -57,8 +57,10 @@ public class Game {
             }
             effect = "{"+effect+"}";
             string = effect + " " +(c++)+" : "+string+newLine;
-            Screen.print(string);
+            content += string+newLine;
         }
+
+        Screen.print(player, title, content);
 
         int option = Input.num(menuOptions.size());
         //Screen.clear();
@@ -75,12 +77,8 @@ public class Game {
 
     public void humaning() {
         if (inventory.getAmount() >= inventory.getSize()) return;
-        Human human = Humans.getRandomHuman(player.getLuck());
 
-        // String rarity = human.getRarity();
-        // String name = human.getName();
-        // String color = human.getColor();
-        //int chance = human.getChance();
+        Human human = Humans.getRandomHuman(player.getLuck()/(.25));
         String properties = human.getProperties();
 
         Screen.printBar(player, "YOU CAUGHT A HUMAN!");
@@ -101,7 +99,20 @@ public class Game {
     public void inventory() {
         Screen.printBar(player, "INVENTORY");
         Screen.print(inventory.toString());
+
+        int options = inventory.getAmount();
+        int selection = Input.num(1, options, true);
+
+        if (selection == -1) {
+            return;
+        }
+
+        Screen.printBar(player, "HUMAN");
+        Screen.print(inventory.getHuman(selection).getProperties());
+
         Input.cnt();
+
+        inventory();
     }
 
     public void sell() {
@@ -118,7 +129,7 @@ public class Game {
         }
 
         //Screen.clear();
-        int money = selection == 0 ? inventory.getWorth() : inventory.getHuman(selection-1).getPrice();
+        int money = selection == 0 ? inventory.getWorth() : inventory.getHuman(selection).getPrice();
         player.addMoney(money);
 
         Screen.printBar(player, "SELL HUMANS");
@@ -129,7 +140,7 @@ public class Game {
             inventory.removeHumans();;
         } else {
             //player.sellHuman(selection-1);
-            inventory.removeHuman(selection-1);
+            inventory.removeHuman(selection);
         }
 
         Screen.print("\n{BOLD}Sold! You earned {green}$"+money+"!");

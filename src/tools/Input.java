@@ -13,6 +13,22 @@ public class Input {
         scanner.nextLine();
     }
 
+    public static String space() {
+        try {
+            new ProcessBuilder("sh", "-c", "stty raw -echo").inheritIO().start().waitFor();
+
+            if (System.in.available() > 0) return scanner.nextLine();
+
+            new ProcessBuilder("sh", "-c", "stty sane -echo").inheritIO().start().waitFor();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
+
     public static int num(int min, int max, boolean enter) {
         System.out.println();
         

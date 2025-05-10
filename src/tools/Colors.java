@@ -47,6 +47,7 @@ public class Colors {
         int a = 1;
         for (String attribute: attributes) {
             if (attribute == null) continue;
+            if (attribute.equals("C")) return Screen.getClear();
 
             int num = -1;
 

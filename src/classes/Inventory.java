@@ -28,7 +28,7 @@ public class Inventory {
     }
 
     public void removeHuman(int index) {
-        humans.remove(index);
+        humans.remove(index-1);
     }
 
     public void removeHumans() {
@@ -50,10 +50,10 @@ public class Inventory {
     }
 
     public Human getHuman(int index) {
-        if (index >= humans.size()) {
+        if (index > humans.size()) {
             return null;
         }
-        return humans.get(index);
+        return humans.get(index-1);
     }
 
     public int getSize() {
